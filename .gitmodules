@@ -46,10 +46,6 @@
 	path = components/WiFiManager
 	url = https://github.com/tzapu/WiFiManager
 	shallow = true
-[submodule "firmware/clockfaces/cw-cf-0x07"]
-	path = firmware/clockfaces/cw-cf-0x07
-url=https://github.com/jnthas/cw-cf-0x07.git
-	shallow = true
 [submodule "firmware/clockfaces/cw-cf-0x07a"]
 	path = firmware/clockfaces/cw-cf-0x07a
 	url = https://github.com/robegamesios/canvas-clockface.git
