@@ -82,7 +82,7 @@ struct ClockwiseParams
         wifiPwd = preferences.getString(PREF_WIFI_PASSWORD, "");
         ntpServer = preferences.getString(PREF_NTP_SERVER, "time.google.com");
         canvasFile = preferences.getString(PREF_CANVAS_FILE, "");
-        canvasServer = preferences.getString(PREF_CANVAS_SERVER, "raw.githubusercontent.com");
+        canvasServer = preferences.getString(PREF_CANVAS_SERVER, "192.168.50.10");
         manualPosix = preferences.getString(PREF_MANUAL_POSIX, "");
     }
 

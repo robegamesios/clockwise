@@ -56,6 +56,8 @@ struct ClockwiseHttpClient
       Serial.print(F("Unexpected response: "));
       Serial.println(status);
       client->stop();
+      Serial.println("Error encountered, check json file name: defaulting to hello-world.json");
+      httpGet(client, host, "/hello-world.json", 4443);
       return;
     }
 
