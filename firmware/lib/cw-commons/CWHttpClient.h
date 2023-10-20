@@ -1,8 +1,8 @@
 #pragma once
 
 #include <WiFi.h>
-//#include <WiFiClientSecure.h>
-#include <WiFiClient.h>
+#include <WiFiClientSecure.h>
+// #include <WiFiClient.h>
 
 struct ClockwiseHttpClient
 {
@@ -13,7 +13,7 @@ struct ClockwiseHttpClient
     return &base;
   }
 
-  void httpGet(WiFiClient *client, const char *host, const char *path, const uint16_t port)
+  void httpGet(WiFiClientSecure *client, const char *host, const char *path, const uint16_t port)
   {
     Serial.printf("[HTTP] GET request to '%s%s' on port %d\n", host, path, port);
 
@@ -23,7 +23,7 @@ struct ClockwiseHttpClient
       return;
     }
 
-    //client->setInsecure();
+    client->setInsecure();
     client->setTimeout(10000);
     if (!client->connect(host, port))
     {
@@ -56,8 +56,6 @@ struct ClockwiseHttpClient
       Serial.print(F("Unexpected response: "));
       Serial.println(status);
       client->stop();
-      Serial.println("Error encountered, check json file name: defaulting to hello-world.json");
-      httpGet(client, host, "/hello-world.json", 4443);
       return;
     }
 
