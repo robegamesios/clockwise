@@ -10,12 +10,14 @@
 #include <CWWebServer.h>
 #include <StatusController.h>
 
+#include <V1.0.h>
+
 #define MIN_BRIGHT_DISPLAY_ON 4
 #define MIN_BRIGHT_DISPLAY_OFF 0
 
 #define ESP32_LED_BUILTIN 2
 
-MatrixPanel_I2S_DMA *dma_display = nullptr;
+// MatrixPanel_I2S_DMA *dma_display = nullptr;
 
 Clockface *clockface;
 
@@ -78,6 +80,9 @@ void setup()
   Serial.begin(115200);
   pinMode(ESP32_LED_BUILTIN, OUTPUT);
 
+  setupAudiVisualizer();
+  return;
+
   StatusController::getInstance()->blink_led(5, 100);
 
   ClockwiseParams::getInstance()->load();
@@ -106,6 +111,9 @@ void setup()
 
 void loop()
 {
+  loopAudioVisualizer();
+  return;
+
   wifi.handleImprovWiFi();
 
   if (wifi.isConnected())
