@@ -4,7 +4,7 @@
 // Clockface
 #include <Clockface.h>
 // Commons
-#include <WiFiController.h>
+#include <WiFiConnect.h>
 #include <CWDateTime.h>
 #include <CWPreferences.h>
 #include <CWWebServer.h>
@@ -19,7 +19,7 @@ MatrixPanel_I2S_DMA *dma_display = nullptr;
 
 Clockface *clockface;
 
-WiFiController wifi;
+WiFiConnect wifi;
 CWDateTime cwDateTime;
 
 bool autoBrightEnabled;
@@ -50,7 +50,8 @@ void displaySetup(bool swapBlueGreen, uint8_t displayBright)
 
 void automaticBrightControl()
 {
-  if (autoBrightEnabled) {
+  if (autoBrightEnabled)
+  {
     if (millis() - autoBrightMillis > 3000)
     {
       int16_t currentValue = analogRead(ClockwiseParams::getInstance()->ldrPin);
@@ -61,10 +62,10 @@ void automaticBrightControl()
       const uint8_t minBright = (currentValue < ldrMin ? MIN_BRIGHT_DISPLAY_OFF : MIN_BRIGHT_DISPLAY_ON);
       uint8_t maxBright = ClockwiseParams::getInstance()->displayBright;
 
-      uint8_t mapLDR = map(currentValue, ldrMin, ldrMax, 1, 5);  //5 slots
+      uint8_t mapLDR = map(currentValue, ldrMin, ldrMax, 1, 5); // 5 slots
       uint8_t mapBright = map(mapLDR, 1, 5, minBright, maxBright);
 
-      //Serial.printf("LDR: %d, Bright: %d\n", currentValue, mapBright);
+      // Serial.printf("LDR: %d, Bright: %d\n", currentValue, mapBright);
 
       dma_display->setBrightness8(mapBright);
 
@@ -93,30 +94,32 @@ void setup()
   delay(1000);
 
   StatusController::getInstance()->wifiConnecting();
-  if (wifi.begin())
+  wifi.connect();
+
+  while (!wifi.isConnected())
   {
-    StatusController::getInstance()->ntpConnecting();
-    cwDateTime.begin(ClockwiseParams::getInstance()->timeZone.c_str(), 
-        ClockwiseParams::getInstance()->use24hFormat, 
-        ClockwiseParams::getInstance()->ntpServer.c_str(),
-        ClockwiseParams::getInstance()->manualPosix.c_str());
-    clockface->setup(&cwDateTime);
+    Serial.println("Wifi not connected, resetting in 1 sec");
+    ClockwiseWebServer::getInstance()->stopWebServer();
+    delay(1000);
   }
+  ClockwiseWebServer::getInstance()->startWebServer();
+  StatusController::getInstance()->ntpConnecting();
+  cwDateTime.begin(ClockwiseParams::getInstance()->timeZone.c_str(),
+                   ClockwiseParams::getInstance()->use24hFormat,
+                   ClockwiseParams::getInstance()->ntpServer.c_str(),
+                   ClockwiseParams::getInstance()->manualPosix.c_str());
+  clockface->setup(&cwDateTime);
 }
 
 void loop()
 {
-  wifi.handleImprovWiFi();
 
   if (wifi.isConnected())
   {
     ClockwiseWebServer::getInstance()->handleHttpRequest();
   }
-
-  if (wifi.connectionSucessfulOnce)
-  {
-    clockface->update();
-  }
+  
+  clockface->update();
 
   automaticBrightControl();
 }
