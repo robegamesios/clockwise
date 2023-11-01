@@ -4,7 +4,6 @@
 // Clockface
 #include <Clockface.h>
 // Commons
-#include <WiFiConnect.h>
 #include <CWDateTime.h>
 #include <CWPreferences.h>
 #include <CWWebServer.h>
@@ -19,7 +18,6 @@ MatrixPanel_I2S_DMA *dma_display = nullptr;
 
 Clockface *clockface;
 
-WiFiConnect wifi;
 CWDateTime cwDateTime;
 
 bool autoBrightEnabled;
