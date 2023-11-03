@@ -225,6 +225,9 @@ const char SETTINGS_PAGE[] PROGMEM = R""""(
       const xhr = new XMLHttpRequest();
       xhr.open('GET', '/change_firmware');
       xhr.send();
+      setTimeout(function() {
+        location.reload();
+      }, 1000);
     }
 
     //Local

@@ -58,7 +58,7 @@ struct ClockwiseWebServer
     }
     Serial.println("mDNS responder started");
     /*return index page which is stored in serverIndex */
-    webserver.on("/change_firmware", HTTP_GET, []()
+    webserver.on("/", HTTP_GET, []()
                  {
     webserver.sendHeader("Connection", "close");
     webserver.send(200, "text/html", changeFirmwarePage); });
@@ -253,8 +253,6 @@ struct ClockwiseWebServer
     {
       server.stop();
       webserver.begin();
-      webserver.sendHeader("Connection", "close");
-      webserver.send(200, "text/html", changeFirmwarePage);
     }
   }
 
