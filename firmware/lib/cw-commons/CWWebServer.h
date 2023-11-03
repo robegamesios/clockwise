@@ -71,6 +71,11 @@ struct ClockwiseWebServer
                    resetWiFiManagerSettings(); // Call the reset function
                  });
 
+    webserver.on("/goto_settings", HTTP_GET, []()
+                 {
+                  webserver.stop();
+                  server.begin(); });
+
     /*handling uploading firmware file */
     webserver.on(
         "/update_firmware", HTTP_POST, []()

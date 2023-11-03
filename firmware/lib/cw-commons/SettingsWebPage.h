@@ -249,11 +249,15 @@ String style =
     "#file-input{padding:0;border:1px solid #ddd;line-height:44px;text-align:left;display:block;cursor:pointer}"
     "#bar,#prgbar{background-color:#f1f1f1;border-radius:10px}#bar{background-color:#3498db;width:0%;height:10px}"
     "form{background:#fff;max-width:258px;margin:75px auto;padding:30px;border-radius:5px;text-align:center}"
-    ".btn{background:#3498db;color:#fff;border-radius:5px;cursor:pointer}"
-    ".btn2{padding:16px;background:#3498db;border-radius:5px;cursor:pointer}</style>";
+    ".btn{background:#3498db;color:#fff;border-radius:5px;cursor:pointer}</style>";
 
 String changeFirmwarePage =
     "<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>"
+
+    "<form name=settingsForm>"
+    "<h2>Settings</h2>"
+    "<p>Click this instead of the browser Back Button.</p>"
+    "<input onclick=gotoSettings() class=btn value='Go to Settings'></form>"
 
     "<form method='POST' action='#' enctype='multipart/form-data' id='upload_form'>"
     "<h2>Update Firmware</h2>"
@@ -268,20 +272,16 @@ String changeFirmwarePage =
     "<form name=resetForm>"
     "<h2>Reset WiFi</h2>"
     "<p>This will reset the WiFi configuration.</p>"
-    "<button onclick=resetWiFi() class=btn2>Reset WiFi</button></form>"
+    "<input onclick=resetWiFi() class=btn value='Reset WiFi'></form>"
 
     "<script>"
-    "function updateVisualizer() {"
-    "var selectedPatternTitle = document.forms['selectPattern']['option'].selectedOptions[0].getAttribute('title');"
-    "var selectedPatternValue = document.forms['selectPattern']['option'].value;"
+    "function gotoSettings() {"
     "var xhr = new XMLHttpRequest();"
-    "xhr.open('GET', '/update_visualizer?pattern=' + encodeURIComponent(selectedPatternValue), true);"
-    "xhr.onreadystatechange = function () {"
-    "if (xhr.readyState === 4 && xhr.status === 200) {"
-    "alert('Selected Visualizer Pattern updated to: ' + selectedPatternTitle);"
-    "}"
-    "};"
+    "xhr.open('GET', '/goto_settings');"
     "xhr.send();"
+    "setTimeout(function() {"
+    "location.reload();"
+    "}, 1000);"
     "}"
 
     "function resetWiFi() {"
