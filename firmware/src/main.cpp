@@ -106,9 +106,7 @@ void setup()
                    ClockwiseParams::getInstance()->manualPosix.c_str());
   clockface->setup(&cwDateTime);
 
-  StatusController::getInstance()->ntpConnecting();
   delay(1000);
-  Serial.println("starting web server");
   ClockwiseWebServer::getInstance()->startWebServer();
 }
 
