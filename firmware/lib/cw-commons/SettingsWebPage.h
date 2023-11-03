@@ -23,7 +23,7 @@ const char SETTINGS_PAGE[] PROGMEM = R""""(
 
   <div class="w3-bar w3-black w3-medium">
     <div id="fw-version" class="w3-bar-item w3-black w3-hover-red"></div>
-    <div class="w3-bar-item w3-button w3-hover-yellow w3-right" onclick="resetWifi();"><i class='fa fa-power-off'></i> Reset WiFi</div>
+    <div class="w3-bar-item w3-button w3-hover-yellow w3-right" onclick="loadChangeFirmwarePage();"><i class='fa fa-power-off'></i> Change Theme</div>
     <div id="ssid" class="w3-bar-item w3-hover-blue w3-right"></div>
     <div class="w3-bar-item w3-button w3-hover-yellow w3-right" onclick="restartDevice();"><i class='fa fa-power-off'></i> Restart</div>
     <div id="status" class="w3-bar-item w3-green" style="display:none"><i class='fa fa-floppy-o'></i> Saved! Restart your device</div>
@@ -221,9 +221,9 @@ const char SETTINGS_PAGE[] PROGMEM = R""""(
       xhr.send();
     }
 
-    function resetWifi() {
+    function loadChangeFirmwarePage() {
       const xhr = new XMLHttpRequest();
-      xhr.open('POST', '/reset_wifi');
+      xhr.open('GET', '/change_firmware');
       xhr.send();
     }
 
@@ -248,8 +248,7 @@ String style =
     "form{background:#fff;max-width:258px;margin:75px auto;padding:30px;border-radius:5px;text-align:center}"
     ".btn{background:#3498db;color:#fff;cursor:pointer}</style>";
 
-/* Server Index Page */
-String serverIndex =
+String changeFirmwarePage =
     "<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>"
 
     "<form method='POST' action='#' enctype='multipart/form-data' id='upload_form'>"

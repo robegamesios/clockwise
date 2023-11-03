@@ -100,13 +100,16 @@ void setup()
     ClockwiseWebServer::getInstance()->stopWebServer();
     delay(1000);
   }
-  ClockwiseWebServer::getInstance()->startWebServer();
-  StatusController::getInstance()->ntpConnecting();
   cwDateTime.begin(ClockwiseParams::getInstance()->timeZone.c_str(),
                    ClockwiseParams::getInstance()->use24hFormat,
                    ClockwiseParams::getInstance()->ntpServer.c_str(),
                    ClockwiseParams::getInstance()->manualPosix.c_str());
   clockface->setup(&cwDateTime);
+
+  StatusController::getInstance()->ntpConnecting();
+  delay(1000);
+  Serial.println("starting web server");
+  ClockwiseWebServer::getInstance()->startWebServer();
 }
 
 void loop()
@@ -116,7 +119,7 @@ void loop()
   {
     ClockwiseWebServer::getInstance()->handleHttpRequest();
   }
-  
+
   clockface->update();
 
   automaticBrightControl();
