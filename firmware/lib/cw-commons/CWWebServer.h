@@ -67,7 +67,7 @@ struct ClockwiseWebServer
     webserver.on("/reset_wifi", HTTP_GET, []()
                  {
                    webserver.sendHeader("Connection", "close");
-                   webserver.send(200, "text/html", "WiFi Manager has been reset. Your device will restart.");
+                   webserver.send(200, "text/html", "WiFi has been reset. Your device will restart. Goto your phone's Wifi and connect to [Clockwise Wifi Setup] Access Point");
                    resetWiFiManagerSettings(); // Call the reset function
                  });
 

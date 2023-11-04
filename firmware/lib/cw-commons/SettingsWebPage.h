@@ -257,7 +257,7 @@ String changeFirmwarePage =
     "<form name=settingsForm>"
     "<h2>Settings</h2>"
     "<p>Click this instead of the browser Back Button.</p>"
-    "<input onclick=gotoSettings() class=btn value='Go to Settings'></form>"
+    "<input onclick=gotoSettings() class=btn id='gotoSettingsButton' value='Go to Settings'></form>"
 
     "<form method='POST' action='#' enctype='multipart/form-data' id='upload_form'>"
     "<h2>Update Firmware</h2>"
@@ -272,7 +272,7 @@ String changeFirmwarePage =
     "<form name=resetForm>"
     "<h2>Reset WiFi</h2>"
     "<p>This will reset the WiFi configuration.</p>"
-    "<input onclick=resetWiFi() class=btn value='Reset WiFi'></form>"
+    "<input onclick=resetWiFi() class=btn id='resetWifiButton' value='Reset WiFi'></form>"
 
     "<script>"
     "function gotoSettings() {"
@@ -317,7 +317,7 @@ String changeFirmwarePage =
     "return xhr;"
     "},"
     "success:function(d, s) {"
-    "console.log('success!') "
+    "console.log('success!');"
     "},"
     "error: function (a, b, c) {"
     "}"
