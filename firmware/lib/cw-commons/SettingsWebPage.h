@@ -95,8 +95,8 @@ const char SETTINGS_PAGE[] PROGMEM = R""""(
 </div>
 <div class="card">
     <h2 class="card-title">Pokedex Clock</h2>
-    <p class="card-description">Pokemon Pokedex style clock.<br><br></p>
-    <img class="card-image" src="https://github.com/robegamesios/clockwise/blob/5c71dbe6948a2417c0b90c0a564394bc5959bb07/firmware/lib/clockfaces/thumbnails/world_map_clock.jpg?raw=true" alt="Pokedex Clock">
+    <p class="card-description">Pokemon Pokedex style clock.</p>
+    <img class="card-image" src="https://github.com/robegamesios/clockwise/blob/b21c686f513608553af52024e7189d44b2bebcc9/firmware/lib/clockfaces/thumbnails/pokedex_clock.jpg?raw=true" alt="Pokedex Clock">
     <a class="update-button" onclick="updatePreference('selectedTheme', 5)">Select</a>
 </div>
   <div class="w3-container" style="background-image: linear-gradient(120deg, #155799, #159957);">
