@@ -90,7 +90,7 @@ const char SETTINGS_PAGE[] PROGMEM = R""""(
 <div class="card">
     <h2 class="card-title">World Map Clock</h2>
     <p class="card-description">World Map with time.<br><br></p>
-    <img class="card-image" src="https://github.com/robegamesios/clockwise/blob/d4313923b46cfc8e2b15ab02cce5c3b6fa60e00b/firmware/lib/clockfaces/thumbnails/time_in_words_clock.jpg?raw=true" alt="Time in Words Clock">
+    <img class="card-image" src="https://github.com/robegamesios/clockwise/blob/5c71dbe6948a2417c0b90c0a564394bc5959bb07/firmware/lib/clockfaces/thumbnails/world_map_clock.jpg?raw=true" alt="Time in Words Clock">
     <a class="update-button" onclick="updatePreference('selectedTheme', 4)">Select</a>
 </div>
   <div class="w3-container" style="background-image: linear-gradient(120deg, #155799, #159957);">
