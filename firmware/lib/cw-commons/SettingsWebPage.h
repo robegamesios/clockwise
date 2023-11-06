@@ -83,8 +83,8 @@ const char SETTINGS_PAGE[] PROGMEM = R""""(
 </div>
 <div class="card">
     <h2 class="card-title">Time in Words Clock</h2>
-    <p class="card-description">Time displayed in words. Includes date</p>
-    <img class="card-image" src="https://github.com/robegamesios/clockwise/blob/609c24bcefe1ac681b54db0fb495e52a5ae43f28/firmware/lib/clockfaces/thumbnails/pacman_clock.jpg?raw=true" alt="Time in Words Clock">
+    <p class="card-description">Time displayed in words. Includes date.</p>
+    <img class="card-image" src="https://github.com/robegamesios/clockwise/blob/d4313923b46cfc8e2b15ab02cce5c3b6fa60e00b/firmware/lib/clockfaces/thumbnails/time_in_words_clock.jpg?raw=true" alt="Time in Words Clock">
     <a class="update-button" onclick="updatePreference('selectedTheme', 3)">Select</a>
 </div>
 
