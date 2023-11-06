@@ -8,6 +8,7 @@
 #include <Clockface_timeInWords.h>
 #include <Clockface_worldMap.h>
 #include <Clockface_pokedex.h>
+#include <Clockface_castlevania.h>
 // Commons
 #include <CWDateTime.h>
 #include <CWPreferences.h>
@@ -121,6 +122,11 @@ void setup()
   case 5:
     //pokedex
     clockface = new Clockface_pokedex(dma_display);
+    break;
+
+  case 6:
+    //castlevania
+    clockface = new Clockface_castlevania(dma_display);
     break;
 
   default:
