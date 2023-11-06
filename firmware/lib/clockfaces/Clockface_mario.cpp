@@ -1,7 +1,7 @@
 
 #include "Clockface_mario.h"
 
-EventBus eventBus;
+static EventBus eventBus;
 
 const char* FORMAT_TWO_DIGITS = "%02d";
 

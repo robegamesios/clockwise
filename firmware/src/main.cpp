@@ -5,6 +5,7 @@
 #include <Clockface.h>
 #include <Clockface_mario.h>
 #include <Clockface_pacman.h>
+#include <Clockface_timeInWords.h>
 // Commons
 #include <CWDateTime.h>
 #include <CWPreferences.h>
@@ -103,6 +104,11 @@ void setup()
   case 2:
     //pacman
     clockface = new Clockface_pacman(dma_display);
+    break;
+
+  case 3:
+    //timeInWords
+    clockface = new Clockface_timeInWords(dma_display);
     break;
 
   default:

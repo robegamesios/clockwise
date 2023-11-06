@@ -67,19 +67,25 @@ const char SETTINGS_PAGE[] PROGMEM = R""""(
     <h2 class="card-title">Canvas Clock</h2>
     <p class="card-description">Customizable canvas for gif and images.</p>
     <img class="card-image" src="https://github.com/robegamesios/clockwise/blob/609c24bcefe1ac681b54db0fb495e52a5ae43f28/firmware/lib/clockfaces/thumbnails/canvas_clock.jpg?raw=true" alt="Canvas Clock">
-    <a class="update-button" onclick="updatePreference('selectedTheme', 0)">Update</a>
+    <a class="update-button" onclick="updatePreference('selectedTheme', 0)">Select</a>
 </div>
 <div class="card">
     <h2 class="card-title">Mario Bros Clock</h2>
     <p class="card-description">Mario jumps and bumps the block every minute.</p>
     <img class="card-image" src="https://github.com/robegamesios/clockwise/blob/54d4820e58064194dd3975894a8ead9a786b0938/firmware/lib/clockfaces/thumbnails/mario_bros_clock.jpg?raw=true" alt="Mario Bros Clock">
-    <a class="update-button" onclick="updatePreference('selectedTheme', 1)">Update</a>
+    <a class="update-button" onclick="updatePreference('selectedTheme', 1)">Select</a>
 </div>
 <div class="card">
     <h2 class="card-title">Pacman Clock</h2>
     <p class="card-description">Pacman runs around eating pellets.</p>
     <img class="card-image" src="https://github.com/robegamesios/clockwise/blob/609c24bcefe1ac681b54db0fb495e52a5ae43f28/firmware/lib/clockfaces/thumbnails/pacman_clock.jpg?raw=true" alt="Pacman Clock">
-    <a class="update-button" onclick="updatePreference('selectedTheme', 2)">Update</a>
+    <a class="update-button" onclick="updatePreference('selectedTheme', 2)">Select</a>
+</div>
+<div class="card">
+    <h2 class="card-title">Time in Words Clock</h2>
+    <p class="card-description">Time displayed in words. Includes date</p>
+    <img class="card-image" src="https://github.com/robegamesios/clockwise/blob/609c24bcefe1ac681b54db0fb495e52a5ae43f28/firmware/lib/clockfaces/thumbnails/pacman_clock.jpg?raw=true" alt="Time in Words Clock">
+    <a class="update-button" onclick="updatePreference('selectedTheme', 3)">Select</a>
 </div>
 
   <div class="w3-container" style="background-image: linear-gradient(120deg, #155799, #159957);">
