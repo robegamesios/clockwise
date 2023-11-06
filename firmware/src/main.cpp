@@ -7,6 +7,7 @@
 #include <Clockface_pacman.h>
 #include <Clockface_timeInWords.h>
 #include <Clockface_worldMap.h>
+#include <Clockface_pokedex.h>
 // Commons
 #include <CWDateTime.h>
 #include <CWPreferences.h>
@@ -115,6 +116,11 @@ void setup()
   case 4:
     //worldMap
     clockface = new Clockface_worldMap(dma_display);
+    break;
+
+  case 5:
+    //pokedex
+    clockface = new Clockface_pokedex(dma_display);
     break;
 
   default:
