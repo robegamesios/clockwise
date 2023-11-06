@@ -1,7 +1,7 @@
 
 #include "Clockface_timeInWords.h"
 
-// const char* FORMAT_TWO_DIGITS = "%02d";
+static char* FORMAT_TWO_DIGITS = "%02d";
 
 static EventBus eventBus;
 

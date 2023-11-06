@@ -3,7 +3,7 @@
 
 static EventBus eventBus;
 
-const char* FORMAT_TWO_DIGITS = "%02d";
+static char* FORMAT_TWO_DIGITS = "%02d";
 
 // Graphical elements
 Tile ground(GROUND, 8, 8); 
