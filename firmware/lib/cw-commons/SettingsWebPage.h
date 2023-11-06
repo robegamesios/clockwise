@@ -66,8 +66,8 @@ const char SETTINGS_PAGE[] PROGMEM = R""""(
 <div class="card">
     <h2 class="card-title">Canvas Clock</h2>
     <p class="card-description">Customizable canvas for gif and images.</p>
-    <img class="card-image" src="https://github.com/robegamesios/clockwise/blob/54d4820e58064194dd3975894a8ead9a786b0938/firmware/lib/clockfaces/thumbnails/canvas_clock.jpg?raw=true" alt="Canvas Clock">
-    <a class="update-button" onclick="updatePreference('selectedTheme', 1)">Update</a>
+    <img class="card-image" src="https://github.com/robegamesios/clockwise/blob/609c24bcefe1ac681b54db0fb495e52a5ae43f28/firmware/lib/clockfaces/thumbnails/canvas_clock.jpg?raw=true" alt="Canvas Clock">
+    <a class="update-button" onclick="updatePreference('selectedTheme', 0)">Update</a>
 </div>
 <div class="card">
     <h2 class="card-title">Mario Bros Clock</h2>
@@ -76,9 +76,9 @@ const char SETTINGS_PAGE[] PROGMEM = R""""(
     <a class="update-button" onclick="updatePreference('selectedTheme', 1)">Update</a>
 </div>
 <div class="card">
-    <h2 class="card-title">Mario Bros Clock</h2>
-    <p class="card-description">Mario jumps and bumps the block every minute.</p>
-    <img class="card-image" src="https://github.com/robegamesios/clockwise/blob/54d4820e58064194dd3975894a8ead9a786b0938/firmware/lib/clockfaces/thumbnails/pacman_clock.jpg?raw=true" alt="Pacman Clock">
+    <h2 class="card-title">Pacman Clock</h2>
+    <p class="card-description">Pacman runs around eating pellets.</p>
+    <img class="card-image" src="https://github.com/robegamesios/clockwise/blob/609c24bcefe1ac681b54db0fb495e52a5ae43f28/firmware/lib/clockfaces/thumbnails/pacman_clock.jpg?raw=true" alt="Pacman Clock">
     <a class="update-button" onclick="updatePreference('selectedTheme', 2)">Update</a>
 </div>
 
