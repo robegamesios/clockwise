@@ -102,7 +102,7 @@ const char SETTINGS_PAGE[] PROGMEM = R""""(
 <div class="card">
     <h2 class="card-title">Castlevania Clock</h2>
     <p class="card-description">Castlevania style clock.<br><br></p>
-    <img class="card-image" src="https://github.com/robegamesios/clockwise/blob/b21c686f513608553af52024e7189d44b2bebcc9/firmware/lib/clockfaces/thumbnails/pokedex_clock.jpg?raw=true" alt="Castlevania Clock">
+    <img class="card-image" src="https://github.com/robegamesios/clockwise/blob/e8473f91b40c73df20a627766af999add19cd615/firmware/lib/clockfaces/thumbnails/castlevania_clock.jpg?raw=true" alt="Castlevania Clock">
     <a class="update-button" onclick="updatePreference('selectedTheme', 6)">Select</a>
 </div>
 
