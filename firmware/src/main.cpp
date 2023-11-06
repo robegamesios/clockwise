@@ -3,6 +3,7 @@
 
 // Clockface
 #include <Clockface.h>
+#include <Clockface_mario.h>
 // Commons
 #include <CWDateTime.h>
 #include <CWPreferences.h>
@@ -16,12 +17,13 @@
 
 MatrixPanel_I2S_DMA *dma_display = nullptr;
 
-Clockface *clockface;
+IClockface *clockface;
 
 CWDateTime cwDateTime;
 
 bool autoBrightEnabled;
 long autoBrightMillis = 0;
+int selectedTheme = 1;
 
 void displaySetup(bool swapBlueGreen, uint8_t displayBright)
 {
@@ -84,7 +86,18 @@ void setup()
   pinMode(ClockwiseParams::getInstance()->ldrPin, INPUT);
 
   displaySetup(ClockwiseParams::getInstance()->swapBlueGreen, ClockwiseParams::getInstance()->displayBright);
-  clockface = new Clockface(dma_display);
+
+  switch (selectedTheme)
+  {
+  case 0:
+    //mario
+    clockface = new Clockface_mario(dma_display);
+    break;
+  
+  default:
+    clockface = new Clockface(dma_display);
+    break;
+  }
 
   autoBrightEnabled = (ClockwiseParams::getInstance()->autoBrightMax > 0);
 
