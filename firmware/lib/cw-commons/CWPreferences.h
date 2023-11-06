@@ -24,6 +24,7 @@ struct ClockwiseParams
     const char* const PREF_CANVAS_FILE = "canvasFile";
     const char* const PREF_CANVAS_SERVER = "canvasServer";
     const char* const PREF_MANUAL_POSIX = "manualPosix";
+    const char* const PREF_SELECTED_THEME = "selectedTheme";
 
 
     bool swapBlueGreen;
@@ -39,6 +40,7 @@ struct ClockwiseParams
     String canvasFile;
     String canvasServer;
     String manualPosix;
+    uint8_t selectedTheme;
 
 
     ClockwiseParams() {
@@ -67,6 +69,7 @@ struct ClockwiseParams
         preferences.putString(PREF_CANVAS_FILE, canvasFile);
         preferences.putString(PREF_CANVAS_SERVER, canvasServer);
         preferences.putString(PREF_MANUAL_POSIX, manualPosix);
+        preferences.putUInt(PREF_SELECTED_THEME, selectedTheme);
     }
 
     void load()
@@ -84,6 +87,7 @@ struct ClockwiseParams
         canvasFile = preferences.getString(PREF_CANVAS_FILE, "hello-world");
         canvasServer = preferences.getString(PREF_CANVAS_SERVER, "raw.githubusercontent.com");
         manualPosix = preferences.getString(PREF_MANUAL_POSIX, "");
+        selectedTheme = preferences.getUInt(PREF_SELECTED_THEME, 0);
     }
 
 };

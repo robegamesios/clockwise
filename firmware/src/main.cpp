@@ -4,6 +4,7 @@
 // Clockface
 #include <Clockface.h>
 #include <Clockface_mario.h>
+#include <Clockface_pacman.h>
 // Commons
 #include <CWDateTime.h>
 #include <CWPreferences.h>
@@ -23,7 +24,6 @@ CWDateTime cwDateTime;
 
 bool autoBrightEnabled;
 long autoBrightMillis = 0;
-int selectedTheme = 1;
 
 void displaySetup(bool swapBlueGreen, uint8_t displayBright)
 {
@@ -87,14 +87,26 @@ void setup()
 
   displaySetup(ClockwiseParams::getInstance()->swapBlueGreen, ClockwiseParams::getInstance()->displayBright);
 
+  uint8_t selectedTheme = ClockwiseParams::getInstance()->selectedTheme;
+  Serial.printf("selectedtheme = %d\n", selectedTheme);
   switch (selectedTheme)
   {
   case 0:
+    clockface = new Clockface(dma_display);
+    break;
+
+  case 1:
     //mario
     clockface = new Clockface_mario(dma_display);
     break;
-  
+
+  case 2:
+    //pacman
+    clockface = new Clockface_pacman(dma_display);
+    break;
+
   default:
+    //same as 0
     clockface = new Clockface(dma_display);
     break;
   }

@@ -251,6 +251,10 @@ struct ClockwiseWebServer
       {
         ClockwiseParams::getInstance()->manualPosix = value;
       }
+      else if (key == ClockwiseParams::getInstance()->PREF_SELECTED_THEME)
+      {
+        ClockwiseParams::getInstance()->selectedTheme = value.toInt();
+      }
       ClockwiseParams::getInstance()->save();
       client.println("HTTP/1.0 204 No Content");
     }
