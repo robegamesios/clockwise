@@ -1,7 +1,7 @@
 
 #include "Clockface_worldMap.h"
 
-static char* FORMAT_TWO_DIGITS = "%02d";
+static const char* FORMAT_TWO_DIGITS = "%02d";
 
 const short BRAZIL_TZ = 32;
 const short TZ_SIZE = 5;
