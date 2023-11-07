@@ -27,7 +27,6 @@
 #define DEBUG_BUFFER_SIZE   100                     // Debug buffer size
 
 //Options Change to your likings
-#define BottomRowAlwaysOn   1                       // if set to 1, bottom row is always on. Setting only applies to LEDstrip not HUB75
 #define Fallingspeed        5                       // Falling down factor that effects the speed of falling tiles
 #define LogoBoot            1                       // Show logo on boot when set to 1, only works in combination with HUB75
 int Peakdelay =             60;                     // Delay before peak falls down to stack. Overruled by PEAKDEALY Potmeter
@@ -72,15 +71,6 @@ float FreqBins[65] = {0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0
 // Colors mode 0
 #define ChangingBar_Color   y * (255 / kMatrixHeight) + colorTimer, 255, 255
 // no peaks
-
-// Colors mode 1 These are the colors from the TRIBAR when using Ledstrip
-#define TriBar_Color_Top      0 , 255, 255    // Red CHSV
-#define TriBar_Color_Bottom   95 , 255, 255   // Green CHSV
-#define TriBar_Color_Middle   45, 255, 255    // Yellow CHSV
-
-#define TriBar_Color_Top_Peak      0 , 255, 255    // Red CHSV
-#define TriBar_Color_Bottom_Peak   95 , 255, 255   // Green CHSV
-#define TriBar_Color_Middle_Peak   45, 255, 255    // Yellow CHSV
 
 // Colors mode 1 These are the colors from the TRIBAR when using HUB75
 #define TriBar_RGB_Top      255 , 0, 0    // Red CRGB

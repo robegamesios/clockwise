@@ -1,19 +1,15 @@
 #include <Arduino.h>
-#include <ESP32-VirtualMatrixPanel-I2S-DMA.h>
-#include <ESP32-HUB75-MatrixPanel-I2S-DMA.h>
 
 /********************************************************************************************************************************************************
- * EPS32 Audio Visualizer 
+ * EPS32 Audio Visualizer
  * Github: https://github.com/robegamesios/FFT_ESP32_Analyzer
  * Features:
  *  Web interface by accessing the ESP32 wifi address
  *  Update the firmware via OTA
- * 
+ *
  * Forked from https://github.com/donnersm/FFT_ESP32_Analyzer
- 
-********************************************************************************************************************************************************/
 
-#define VERSION "V1.0"
+********************************************************************************************************************************************************/
 
 #include <FastLED_NeoMatrix.h>
 #include <arduinoFFT.h>
@@ -24,7 +20,6 @@
 #include "LEDDRIVER.H"
 #include "Settings.h"
 #include "PatternsHUB75.h"
-#include "PatternsLedstrip.h"
 #include "fire.h"
 #define up 1
 #define down 0
@@ -72,22 +67,11 @@ void DrawVUPixels(int i, int yVU, int fadeBy = 0)
     VUC.b = 0;
   }
 
-#ifdef Ledstrip
-  int xHalf = matrix->width() / 2;
-  //  matrix->drawPixel(xHalf-i-1, yVU, CRGB(0,100,0).fadeToBlackBy(fadeBy));
-  //  matrix->drawPixel(xHalf+i,   yVU, CRGB(0,100,0).fadeToBlackBy(fadeBy));
-  matrix->drawPixel(xHalf - i - 1, yVU, CRGB(VUC.r, VUC.g, VUC.b).fadeToBlackBy(fadeBy));
-  matrix->drawPixel(xHalf + i, yVU, CRGB(VUC.r, VUC.g, VUC.b).fadeToBlackBy(fadeBy));
-
-#endif
-
-#ifdef HUB75
   int xHalf = PANE_WIDTH / 2;
   dma2_display->drawPixelRGB888(xHalf - i - 2, yVU, VUC.r, VUC.g, VUC.b);     // left side of screen line 0
   dma2_display->drawPixelRGB888(xHalf - i - 2, yVU + 1, VUC.r, VUC.g, VUC.b); // left side of screen line 1
   dma2_display->drawPixelRGB888(xHalf + i + 1, yVU, VUC.r, VUC.g, VUC.b);     // right side of screen line 0
   dma2_display->drawPixelRGB888(xHalf + i + 1, yVU + 1, VUC.r, VUC.g, VUC.b); // right side of screen line 1
-#endif
 }
 
 void DrawVUMeter(int yVU)
@@ -95,16 +79,11 @@ void DrawVUMeter(int yVU)
   static int iPeakVUy = 0;           // size (in LED pixels) of the VU peak
   static unsigned long msPeakVU = 0; // timestamp in ms when that peak happened so we know how old it is
   const int MAX_FADE = 256;
-#ifdef HUB75
   for (int x = 0; x < PANE_WIDTH; x++)
   {
     dma2_display->drawPixelRGB888(x, yVU, 0, 0, 0);
     dma2_display->drawPixelRGB888(x, yVU + 1, 0, 0, 0);
   }
-#endif
-#ifdef Ledstrip
-  matrix->fillRect(0, yVU, matrix->width(), 1, 0x0000);
-#endif
   if (iPeakVUy > 1)
   {
     int fade = MAX_FADE * (millis() - msPeakVU) / (float)1000;
@@ -207,19 +186,13 @@ void make_fire()
     {
       // matrix -> drawPixel(j, rows - i, colors[pix[i][j]]);
       CRGB COlsplit = colors[pix[i][j]];
-#ifdef HUB75
       dma2_display->drawPixelRGB888(j, rows - i, COlsplit.r, COlsplit.g, COlsplit.b);
-#endif
-#ifdef Ledstrip
-      matrix->drawPixel(j, rows - i, colors[pix[i][j]]);
-#endif
     }
   }
 }
 
 void DisplayPrint(char *text)
 {
-#ifdef HUB75
   dma2_display->fillRect(8, 8, kMatrixWidth - 16, 11, dma2_display->color444(0, 0, 0));
   dma2_display->setTextSize(1);
   dma2_display->setTextWrap(false);
@@ -227,7 +200,6 @@ void DisplayPrint(char *text)
   dma2_display->print(text);
   delay(1000);
   dma2_display->fillRect(8, 8, kMatrixWidth - 16, 11, dma2_display->color444(0, 0, 0));
-#endif
 }
 
 void setupAudiVisualizer()
@@ -237,17 +209,12 @@ void setupAudiVisualizer()
   setupI2S();
   Serial.println("Audio input setup completed");
   delay(1000);
-#ifdef Ledstrip
-  SetupLEDSTRIP();
-#endif
 
-#ifdef HUB75
   SetupHUB75();
   if (kMatrixHeight > 60)
   {
     dma2_display->setBrightness8(32);
   }
-#endif
 }
 
 void loopAudioVisualizer()
@@ -408,163 +375,81 @@ void loopAudioVisualizer()
       AutoModeMem = autoChangePatterns;
       autoChangePatterns = false;
       buttonPushCounter = 12;
-#ifdef HUB75
       dma2_display->clearScreen();
-#endif
     }
     // Wait,signal is back? then wakeup!
     else if (DemoFlag == true && (millis() - LastDoNothingTime) < DemoAfterSec)
     { //("In loop 2:  %d", millis() - LastDoNothingTime);
       // while in demo the democounter was reset due to signal on one of the bars.
       // So we need to exit demo mode.
-#ifdef HUB75
       dma2_display->clearScreen();
-#endif
-      buttonPushCounter = DemoModeMem; // restore settings
+      buttonPushCounter = DemoModeMem;  // restore settings
       autoChangePatterns = AutoModeMem; // restore settings
       DemoFlag = false;
     }
-#if BottomRowAlwaysOn
-    if (barHeight == 0)
-      barHeight = 1; // make sure there is always one bar that lights up
-#endif
     // Now visualize those bar heights
     switch (buttonPushCounter)
     {
     case 0:
-#ifdef HUB75
       PeakDirection = down;
       BoxedBars(band, barHeight);
       BluePeak(band);
-#endif
-#ifdef Ledstrip
-      changingBarsLS(band, barHeight);
-#endif
       break;
 
     case 1:
-#ifdef HUB75
       PeakDirection = down;
       BoxedBars2(band, barHeight);
       BluePeak(band);
-#endif
-#ifdef Ledstrip
-      TriBarLS(band, barHeight);
-      TriPeakLS(band);
-#endif
       break;
     case 2:
-#ifdef HUB75
       PeakDirection = down;
       BoxedBars3(band, barHeight);
       RedPeak(band);
-#endif
-#ifdef Ledstrip
-      rainbowBarsLS(band, barHeight);
-      NormalPeakLS(band, PeakColor1);
-#endif
       break;
     case 3:
-#ifdef HUB75
       PeakDirection = down;
       RedBars(band, barHeight);
       BluePeak(band);
-#endif
-#ifdef Ledstrip
-      purpleBarsLS(band, barHeight);
-      NormalPeakLS(band, PeakColor2);
-#endif
       break;
     case 4:
-#ifdef HUB75
       PeakDirection = down;
       ColorBars(band, barHeight);
-#endif
-#ifdef Ledstrip
-      SameBarLS(band, barHeight);
-      NormalPeakLS(band, PeakColor3);
-#endif
       break;
     case 5:
-#ifdef HUB75
       PeakDirection = down;
       Twins(band, barHeight);
       WhitePeak(band);
-#endif
-#ifdef Ledstrip
-      SameBar2LS(band, barHeight);
-      NormalPeakLS(band, PeakColor3);
-#endif
       break;
     case 6:
-#ifdef HUB75
       PeakDirection = down;
       Twins2(band, barHeight);
       WhitePeak(band);
-#endif
-#ifdef Ledstrip
-      centerBarsLS(band, barHeight);
-#endif
       break;
     case 7:
-#ifdef HUB75
       PeakDirection = down;
       TriBars(band, barHeight);
       TriPeak(band);
-#endif
-#ifdef Ledstrip
-      centerBars2LS(band, barHeight);
-#endif
       break;
     case 8:
-#ifdef HUB75
       PeakDirection = up;
       TriBars(band, barHeight);
       TriPeak(band);
-#endif
-#ifdef Ledstrip
-      centerBars3LS(band, barHeight);
-#endif
       break;
     case 9:
-#ifdef HUB75
       PeakDirection = down;
       centerBars(band, barHeight);
-#endif
-#ifdef Ledstrip
-      BlackBarLS(band, barHeight);
-      outrunPeakLS(band);
-#endif
       break;
     case 10:
-#ifdef HUB75
       PeakDirection = down;
       centerBars2(band, barHeight);
-#endif
-#ifdef Ledstrip
-      BlackBarLS(band, barHeight);
-      NormalPeakLS(band, PeakColor5);
-#endif
       break;
     case 11:
-#ifdef HUB75
       PeakDirection = down;
       BlackBars(band, barHeight);
       DoublePeak(band);
-#endif
-#ifdef Ledstrip
-      BlackBarLS(band, barHeight);
-      TriPeak2LS(band);
-#endif
       break;
     case 12:
-#ifdef HUB75
       make_fire(); // go to demo mode
-#endif
-#ifdef Ledstrip
-      matrix->fillRect(0, 0, matrix->width(), 1, 0x0000); // delete the VU meter
-      make_fire();
-#endif
       break;
     }
 
@@ -629,15 +514,7 @@ void loopAudioVisualizer()
     if (autoChangePatterns)
     {
       buttonPushCounter = (buttonPushCounter + 1) % 12;
-#ifdef HUB75
       dma2_display->clearScreen();
-#endif
     }
   }
-
-#ifdef Ledstrip
-  delay(1); // needed to give fastled a minimum recovery time
-  FastLED.show();
-#endif
-
 } // loop end
