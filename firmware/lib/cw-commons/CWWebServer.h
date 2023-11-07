@@ -254,9 +254,13 @@ struct ClockwiseWebServer
       else if (key == ClockwiseParams::getInstance()->PREF_SELECTED_THEME)
       {
         ClockwiseParams::getInstance()->selectedTheme = value.toInt();
+        client.println("HTTP/1.0 204 No Content");        
+        ClockwiseParams::getInstance()->save();
+        force_restart = true;
+        return;
       }
       ClockwiseParams::getInstance()->save();
-      client.println("HTTP/1.0 204 No Content");
+      client.println("HTTP/1.0 204 No Content");        
     }
     else if (method == "GET" && path == "/change_firmware")
     {
