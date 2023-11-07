@@ -119,10 +119,10 @@ void DrawVUPixels(int i, int yVU, int fadeBy = 0)
 
 #ifdef HUB75
   int xHalf = PANE_WIDTH / 2;
-  dma_display->drawPixelRGB888(xHalf - i - 2, yVU, VUC.r, VUC.g, VUC.b);     // left side of screen line 0
-  dma_display->drawPixelRGB888(xHalf - i - 2, yVU + 1, VUC.r, VUC.g, VUC.b); // left side of screen line 1
-  dma_display->drawPixelRGB888(xHalf + i + 1, yVU, VUC.r, VUC.g, VUC.b);     // right side of screen line 0
-  dma_display->drawPixelRGB888(xHalf + i + 1, yVU + 1, VUC.r, VUC.g, VUC.b); // right side of screen line 1
+  dma2_display->drawPixelRGB888(xHalf - i - 2, yVU, VUC.r, VUC.g, VUC.b);     // left side of screen line 0
+  dma2_display->drawPixelRGB888(xHalf - i - 2, yVU + 1, VUC.r, VUC.g, VUC.b); // left side of screen line 1
+  dma2_display->drawPixelRGB888(xHalf + i + 1, yVU, VUC.r, VUC.g, VUC.b);     // right side of screen line 0
+  dma2_display->drawPixelRGB888(xHalf + i + 1, yVU + 1, VUC.r, VUC.g, VUC.b); // right side of screen line 1
 #endif
 }
 
@@ -134,8 +134,8 @@ void DrawVUMeter(int yVU)
 #ifdef HUB75
   for (int x = 0; x < PANE_WIDTH; x++)
   {
-    dma_display->drawPixelRGB888(x, yVU, 0, 0, 0);
-    dma_display->drawPixelRGB888(x, yVU + 1, 0, 0, 0);
+    dma2_display->drawPixelRGB888(x, yVU, 0, 0, 0);
+    dma2_display->drawPixelRGB888(x, yVU + 1, 0, 0, 0);
   }
 #endif
 #ifdef Ledstrip
@@ -244,7 +244,7 @@ void make_fire()
       // matrix -> drawPixel(j, rows - i, colors[pix[i][j]]);
       CRGB COlsplit = colors[pix[i][j]];
 #ifdef HUB75
-      dma_display->drawPixelRGB888(j, rows - i, COlsplit.r, COlsplit.g, COlsplit.b);
+      dma2_display->drawPixelRGB888(j, rows - i, COlsplit.r, COlsplit.g, COlsplit.b);
 #endif
 #ifdef Ledstrip
       matrix->drawPixel(j, rows - i, colors[pix[i][j]]);
@@ -256,13 +256,13 @@ void make_fire()
 void DisplayPrint(char *text)
 {
 #ifdef HUB75
-  dma_display->fillRect(8, 8, kMatrixWidth - 16, 11, dma_display->color444(0, 0, 0));
-  dma_display->setTextSize(1);
-  dma_display->setTextWrap(false);
-  dma_display->setCursor(10, 10);
-  dma_display->print(text);
+  dma2_display->fillRect(8, 8, kMatrixWidth - 16, 11, dma2_display->color444(0, 0, 0));
+  dma2_display->setTextSize(1);
+  dma2_display->setTextWrap(false);
+  dma2_display->setCursor(10, 10);
+  dma2_display->print(text);
   delay(1000);
-  dma_display->fillRect(8, 8, kMatrixWidth - 16, 11, dma_display->color444(0, 0, 0));
+  dma2_display->fillRect(8, 8, kMatrixWidth - 16, 11, dma2_display->color444(0, 0, 0));
 #endif
 }
 
@@ -281,7 +281,7 @@ void setupAudiVisualizer()
   SetupHUB75();
   if (kMatrixHeight > 60)
   {
-    dma_display->setBrightness8(32);
+    dma2_display->setBrightness8(32);
   }
 #endif
 }
@@ -293,7 +293,7 @@ void loopAudioVisualizer()
   // Handle Userinterface
   {
     // #ifdef HUB75
-    //         dma_display->clearScreen();
+    //         dma2_display->clearScreen();
     // #endif
   }
 
@@ -648,7 +648,7 @@ void loopAudioVisualizer()
     {
       buttonPushCounter = (buttonPushCounter + 1) % 12;
 #ifdef HUB75
-      dma_display->clearScreen();
+      dma2_display->clearScreen();
 #endif
     }
   }

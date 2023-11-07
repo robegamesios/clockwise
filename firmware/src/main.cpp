@@ -1,130 +1,69 @@
 #include <Arduino.h>
-#include <ESP32-HUB75-MatrixPanel-I2S-DMA.h>
 
 // Clockface
-#include <Clockface.h>
+#include <ClockfaceSetup.h>
 // Commons
-#include <WiFiController.h>
-#include <CWDateTime.h>
-#include <CWPreferences.h>
 #include <CWWebServer.h>
 #include <StatusController.h>
 
-#include <V1.0.h>
-
-#define MIN_BRIGHT_DISPLAY_ON 4
-#define MIN_BRIGHT_DISPLAY_OFF 0
+#include <AudioVisualizer.h>
 
 #define ESP32_LED_BUILTIN 2
-
-// MatrixPanel_I2S_DMA *dma_display = nullptr;
-
-Clockface *clockface;
-
-WiFiController wifi;
-CWDateTime cwDateTime;
-
-bool autoBrightEnabled;
-long autoBrightMillis = 0;
-
-void displaySetup(bool swapBlueGreen, uint8_t displayBright)
-{
-  HUB75_I2S_CFG mxconfig(64, 64, 1);
-
-  if (swapBlueGreen)
-  {
-    // Swap Blue and Green pins because the panel is RBG instead of RGB.
-    mxconfig.gpio.b1 = 26;
-    mxconfig.gpio.b2 = 12;
-    mxconfig.gpio.g1 = 27;
-    mxconfig.gpio.g2 = 13;
-  }
-
-  mxconfig.gpio.e = 18;
-  mxconfig.clkphase = false;
-
-  // Display Setup
-  dma_display = new MatrixPanel_I2S_DMA(mxconfig);
-  dma_display->begin();
-  dma_display->setBrightness8(displayBright);
-  dma_display->clearScreen();
-}
-
-void automaticBrightControl()
-{
-  if (autoBrightEnabled) {
-    if (millis() - autoBrightMillis > 3000)
-    {
-      int16_t currentValue = analogRead(ClockwiseParams::getInstance()->ldrPin);
-
-      uint16_t ldrMin = ClockwiseParams::getInstance()->autoBrightMin;
-      uint16_t ldrMax = ClockwiseParams::getInstance()->autoBrightMax;
-
-      const uint8_t minBright = (currentValue < ldrMin ? MIN_BRIGHT_DISPLAY_OFF : MIN_BRIGHT_DISPLAY_ON);
-      uint8_t maxBright = ClockwiseParams::getInstance()->displayBright;
-
-      uint8_t mapLDR = map(currentValue, ldrMin, ldrMax, 1, 5);  //5 slots
-      uint8_t mapBright = map(mapLDR, 1, 5, minBright, maxBright);
-
-      //Serial.printf("LDR: %d, Bright: %d\n", currentValue, mapBright);
-
-      dma_display->setBrightness8(mapBright);
-
-      autoBrightMillis = millis();
-    }
-  }
-}
+uint8_t selectedTheme = 7;
 
 void setup()
 {
   Serial.begin(115200);
   pinMode(ESP32_LED_BUILTIN, OUTPUT);
 
-  setupAudiVisualizer();
-  return;
+  // StatusController::getInstance()->blink_led(5, 100);
+  if (selectedTheme == 7)
+  {
+    setupAudiVisualizer();
+    // return;
+  }
+  else
+  {
+    setupClockface();
+  }
 
-  StatusController::getInstance()->blink_led(5, 100);
-
-  ClockwiseParams::getInstance()->load();
-
-  pinMode(ClockwiseParams::getInstance()->ldrPin, INPUT);
-
-  displaySetup(ClockwiseParams::getInstance()->swapBlueGreen, ClockwiseParams::getInstance()->displayBright);
-  clockface = new Clockface(dma_display);
-
-  autoBrightEnabled = (ClockwiseParams::getInstance()->autoBrightMax > 0);
-
-  StatusController::getInstance()->clockwiseLogo();
+  // StatusController::getInstance()->clockwiseLogo();
   delay(1000);
 
-  StatusController::getInstance()->wifiConnecting();
-  if (wifi.begin())
+  // StatusController::getInstance()->wifiConnecting();
+  wifi.connect();
+
+  while (!wifi.isConnected())
   {
-    StatusController::getInstance()->ntpConnecting();
-    cwDateTime.begin(ClockwiseParams::getInstance()->timeZone.c_str(), 
-        ClockwiseParams::getInstance()->use24hFormat, 
-        ClockwiseParams::getInstance()->ntpServer.c_str(),
-        ClockwiseParams::getInstance()->manualPosix.c_str());
-    clockface->setup(&cwDateTime);
+    Serial.println("Wifi not connected, resetting in 1 sec");
+    ClockwiseWebServer::getInstance()->stopWebServer();
+    delay(1000);
   }
+
+  if (selectedTheme != 7)
+  {
+    createClockface();
+  }
+
+  delay(1000);
+  ClockwiseWebServer::getInstance()->startWebServer();
 }
 
 void loop()
 {
-  loopAudioVisualizer();
-  return;
-
-  wifi.handleImprovWiFi();
 
   if (wifi.isConnected())
   {
     ClockwiseWebServer::getInstance()->handleHttpRequest();
   }
 
-  if (wifi.connectionSucessfulOnce)
+  if (selectedTheme == 7)
+  {
+    loopAudioVisualizer();
+  }
+  else
   {
     clockface->update();
+    automaticBrightControl();
   }
-
-  automaticBrightControl();
 }

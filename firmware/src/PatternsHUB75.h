@@ -51,14 +51,14 @@ void ColorBars(int band, int barHeight) {
   for (int y = TOP; y >= 2; y--) {
       if(y >= TOP - barHeight){
 
-        dma_display->drawPixelRGB888(x,y,(band+1)*40,(band+1)*30,255-((band+1)*70));      //middle
-      //   dma_display->drawPixelRGB888(x,y,band*40,band*30,150-(band*10));      //middle
+        dma2_display->drawPixelRGB888(x,y,(band+1)*40,(band+1)*30,255-((band+1)*70));      //middle
+      //   dma2_display->drawPixelRGB888(x,y,band*40,band*30,150-(band*10));      //middle
      
      }
       else {
        // leds[i].fadeToBlackBy( 64 );
       
-      dma_display->drawPixelRGB888(x,y,0,0,0);
+      dma2_display->drawPixelRGB888(x,y,0,0,0);
    
       }
     } 
@@ -79,14 +79,14 @@ void RedBars(int band, int barHeight) {
   for (int y = TOP; y >= 2; y--) {
       if(y >= TOP - barHeight){
 
-        dma_display->drawPixelRGB888(x,y,250,0,0);      //middle
-      //   dma_display->drawPixelRGB888(x,y,band*40,band*30,150-(band*10));      //middle
+        dma2_display->drawPixelRGB888(x,y,250,0,0);      //middle
+      //   dma2_display->drawPixelRGB888(x,y,band*40,band*30,150-(band*10));      //middle
      
      }
       else {
        // leds[i].fadeToBlackBy( 64 );
       
-      dma_display->drawPixelRGB888(x,y,0,0,0);
+      dma2_display->drawPixelRGB888(x,y,0,0,0);
    
       }
     } 
@@ -106,14 +106,14 @@ void Twins(int band, int barHeight) {
     
   for (int y = TOP; y >= 2; y--) {
       if(y >= TOP - barHeight){
-        if((band & 1)==1)dma_display->drawPixelRGB888(x,y,250,0,0);
-        else dma_display->drawPixelRGB888(x,y,250,250,0);      //middle
+        if((band & 1)==1)dma2_display->drawPixelRGB888(x,y,250,0,0);
+        else dma2_display->drawPixelRGB888(x,y,250,250,0);      //middle
            
      }
       else {
        // leds[i].fadeToBlackBy( 64 );
       
-      dma_display->drawPixelRGB888(x,y,0,0,0);
+      dma2_display->drawPixelRGB888(x,y,0,0,0);
    
       }
     } 
@@ -133,14 +133,14 @@ void Twins2(int band, int barHeight) {
     
   for (int y = TOP; y >= 2; y--) {
       if(y >= TOP - barHeight){
-        if((band & 1)==1)dma_display->drawPixelRGB888(x,y,250,0,250);
-        else dma_display->drawPixelRGB888(x,y,0,250,250);      //middle
+        if((band & 1)==1)dma2_display->drawPixelRGB888(x,y,250,0,250);
+        else dma2_display->drawPixelRGB888(x,y,0,250,250);      //middle
            
      }
       else {
        // leds[i].fadeToBlackBy( 64 );
       
-      dma_display->drawPixelRGB888(x,y,0,0,0);
+      dma2_display->drawPixelRGB888(x,y,0,0,0);
    
       }
     } 
@@ -164,16 +164,16 @@ void TriBars(int band, int barHeight) {
   for (int y = TOP; y >= 2; y--) {
       if(y >= TOP - barHeight){
 
-        if (y < (PANEL_HEIGHT/4)) dma_display->drawPixelRGB888(x, y,TriBar_RGB_Top );     //Top 
-        else if (y > (PANEL_HEIGHT/2)) dma_display->drawPixelRGB888(x, y, TriBar_RGB_Bottom ); // bottom
-        else  dma_display->drawPixelRGB888(x,y,TriBar_RGB_Middle);      //middle
-        //else  dma_display->drawPixelRGB888(x,y,TriBar_Color_Middle_RGB);      //middle
+        if (y < (PANEL_HEIGHT/4)) dma2_display->drawPixelRGB888(x, y,TriBar_RGB_Top );     //Top 
+        else if (y > (PANEL_HEIGHT/2)) dma2_display->drawPixelRGB888(x, y, TriBar_RGB_Bottom ); // bottom
+        else  dma2_display->drawPixelRGB888(x,y,TriBar_RGB_Middle);      //middle
+        //else  dma2_display->drawPixelRGB888(x,y,TriBar_Color_Middle_RGB);      //middle
      
      }
       else {
        // leds[i].fadeToBlackBy( 64 );
       
-      dma_display->drawPixelRGB888(x,y,0,0,0);
+      dma2_display->drawPixelRGB888(x,y,0,0,0);
    
       }
     } 
@@ -192,16 +192,16 @@ void BoxedBars(int band, int barHeight) {
     for (int y = TOP; y >= 2; y--) {
      if(y >= TOP - barHeight){
       
-      if (y==(TOP - barHeight))dma_display->drawPixelRGB888(x,y,250,0,0);
-      else if (x==xStart)dma_display->drawPixelRGB888(x,y,250,0,0); // Border left side of the bars
-      else if(x==xStart+BAR_WIDTH-1)dma_display->drawPixelRGB888(x,y,250,0,0); // Border right side of the bars
-      else dma_display->drawPixelRGB888(x,y,0,0,250);
+      if (y==(TOP - barHeight))dma2_display->drawPixelRGB888(x,y,250,0,0);
+      else if (x==xStart)dma2_display->drawPixelRGB888(x,y,250,0,0); // Border left side of the bars
+      else if(x==xStart+BAR_WIDTH-1)dma2_display->drawPixelRGB888(x,y,250,0,0); // Border right side of the bars
+      else dma2_display->drawPixelRGB888(x,y,0,0,250);
      
      }
       else {
        // leds[i].fadeToBlackBy( 64 );
       
-      dma_display->drawPixelRGB888(x,y,0,0,0);
+      dma2_display->drawPixelRGB888(x,y,0,0,0);
     
       }
     } 
@@ -220,16 +220,16 @@ void BoxedBars2(int band, int barHeight) {
     for (int y = TOP; y >= 2; y--) {
      if(y >= TOP - barHeight){
       
-      if (y==(TOP - barHeight))dma_display->drawPixelRGB888(x,y,250,250,250);
-      else if (x==xStart)dma_display->drawPixelRGB888(x,y,250,250,250); // Border left side of the bars
-      else if(x==xStart+BAR_WIDTH-1)dma_display->drawPixelRGB888(x,y,250,250,250); // Border right side of the bars
-      else dma_display->drawPixelRGB888(x,y,0,0,250);
+      if (y==(TOP - barHeight))dma2_display->drawPixelRGB888(x,y,250,250,250);
+      else if (x==xStart)dma2_display->drawPixelRGB888(x,y,250,250,250); // Border left side of the bars
+      else if(x==xStart+BAR_WIDTH-1)dma2_display->drawPixelRGB888(x,y,250,250,250); // Border right side of the bars
+      else dma2_display->drawPixelRGB888(x,y,0,0,250);
      
      }
       else {
        // leds[i].fadeToBlackBy( 64 );
       
-      dma_display->drawPixelRGB888(x,y,0,0,0);
+      dma2_display->drawPixelRGB888(x,y,0,0,0);
     
       }
     } 
@@ -249,16 +249,16 @@ void BoxedBars3(int band, int barHeight) {
     for (int y = TOP; y >= 2; y--) {
      if(y >= TOP - barHeight){
       
-      if (y==(TOP - barHeight))dma_display->drawPixelRGB888(x,y,0,255,0);
-      else if (x==xStart)dma_display->drawPixelRGB888(x,y,0,255,0); // Border left side of the bars
-      else if(x==xStart+BAR_WIDTH-1)dma_display->drawPixelRGB888(x,y,0,255,0); // Border right side of the bars
-      else dma_display->drawPixelRGB888(x,y,200,200,0);
+      if (y==(TOP - barHeight))dma2_display->drawPixelRGB888(x,y,0,255,0);
+      else if (x==xStart)dma2_display->drawPixelRGB888(x,y,0,255,0); // Border left side of the bars
+      else if(x==xStart+BAR_WIDTH-1)dma2_display->drawPixelRGB888(x,y,0,255,0); // Border right side of the bars
+      else dma2_display->drawPixelRGB888(x,y,200,200,0);
      
      }
       else {
        // leds[i].fadeToBlackBy( 64 );
       
-      dma_display->drawPixelRGB888(x,y,0,0,0);
+      dma2_display->drawPixelRGB888(x,y,0,0,0);
     
       }
     } 
@@ -286,17 +286,17 @@ void centerBars(int band, int barHeight) {
     
     
     if(y==(barHeight/2)){
-          dma_display->drawPixelRGB888(x,center+y,Center_RGB_Edge);      //edge
-         dma_display->drawPixelRGB888(x,center-y-1,Center_RGB_Edge);      //edge
+          dma2_display->drawPixelRGB888(x,center+y,Center_RGB_Edge);      //edge
+         dma2_display->drawPixelRGB888(x,center-y-1,Center_RGB_Edge);      //edge
       }
     else  {
-    dma_display->drawPixelRGB888(x,center+y,Center_RGB_Middle);      //middle
-    dma_display->drawPixelRGB888(x,center-y-1,Center_RGB_Middle);      //middle
+    dma2_display->drawPixelRGB888(x,center+y,Center_RGB_Middle);      //middle
+    dma2_display->drawPixelRGB888(x,center-y-1,Center_RGB_Middle);      //middle
     }
      }
      for (int y= barHeight/2;y<TOP;y++){
-      dma_display->drawPixelRGB888(x, center+y+1, 0, 0, 0); // make unused pixel bottom black
-      if((center-y-2)>1)dma_display->drawPixelRGB888(x, center-y-2, 0, 0, 0); // make unused pixel top black except those of the VU meter
+      dma2_display->drawPixelRGB888(x, center+y+1, 0, 0, 0); // make unused pixel bottom black
+      if((center-y-2)>1)dma2_display->drawPixelRGB888(x, center-y-2, 0, 0, 0); // make unused pixel top black except those of the VU meter
      }
   
  
@@ -324,17 +324,17 @@ void centerBars2(int band, int barHeight) {
     
     
     if(y==(barHeight/2)){
-          dma_display->drawPixelRGB888(x,center+y,Center_RGB_Edge2);      //edge
-         dma_display->drawPixelRGB888(x,center-y-1,Center_RGB_Edge2);      //edge
+          dma2_display->drawPixelRGB888(x,center+y,Center_RGB_Edge2);      //edge
+         dma2_display->drawPixelRGB888(x,center-y-1,Center_RGB_Edge2);      //edge
       }
     else  {
-    dma_display->drawPixelRGB888(x,center+y,Center_RGB_Middle2);      //middle
-    dma_display->drawPixelRGB888(x,center-y-1,Center_RGB_Middle2);      //middle
+    dma2_display->drawPixelRGB888(x,center+y,Center_RGB_Middle2);      //middle
+    dma2_display->drawPixelRGB888(x,center-y-1,Center_RGB_Middle2);      //middle
     }
      }
      for (int y= barHeight/2;y<TOP;y++){
-      dma_display->drawPixelRGB888(x, center+y+1, 0, 0, 0); // make unused pixel bottom black
-      if((center-y-2)>1)dma_display->drawPixelRGB888(x, center-y-2, 0, 0, 0); // make unused pixel top black except those of the VU meter
+      dma2_display->drawPixelRGB888(x, center+y+1, 0, 0, 0); // make unused pixel bottom black
+      if((center-y-2)>1)dma2_display->drawPixelRGB888(x, center-y-2, 0, 0, 0); // make unused pixel top black except those of the VU meter
      }
   
  
@@ -360,13 +360,13 @@ void BlackBars(int band, int barHeight) {
       
     
 
-        dma_display->drawPixelRGB888(x,y,0,0,0);      //middle
+        dma2_display->drawPixelRGB888(x,y,0,0,0);      //middle
 
      }
       else {
        // leds[i].fadeToBlackBy( 64 );
      
-      dma_display->drawPixelRGB888(x,y,0,0,0);
+      dma2_display->drawPixelRGB888(x,y,0,0,0);
       
       }
     } 
@@ -389,7 +389,7 @@ void RedPeak(int band) {
   int peakHeight = TOP - peak[band] - 1;
   for (int x = xStart; x < xStart + BAR_WIDTH; x++) {
    // matrix->drawPixel(x, peakHeight, CHSV(0,255,0));
-   dma_display->drawPixelRGB888(x,peakHeight,255,0,0); 
+   dma2_display->drawPixelRGB888(x,peakHeight,255,0,0); 
      }
  // #endif
 }
@@ -405,7 +405,7 @@ void WhitePeak(int band) {
   int peakHeight = TOP - peak[band] - 1;
   for (int x = xStart; x < xStart + BAR_WIDTH; x++) {
    // matrix->drawPixel(x, peakHeight, CHSV(0,255,0));
-   dma_display->drawPixelRGB888(x,peakHeight,255,255,255); 
+   dma2_display->drawPixelRGB888(x,peakHeight,255,255,255); 
      }
  // #endif
 }
@@ -421,7 +421,7 @@ void BluePeak(int band) {
   int peakHeight = TOP - peak[band] - 1;
   for (int x = xStart; x < xStart + BAR_WIDTH; x++) {
    // matrix->drawPixel(x, peakHeight, CHSV(0,255,0));
-   dma_display->drawPixelRGB888(x,peakHeight,0,0,255); 
+   dma2_display->drawPixelRGB888(x,peakHeight,0,0,255); 
      }
  // #endif
 }
@@ -436,8 +436,8 @@ void DoublePeak(int band) {
   int peakHeight = TOP - peak[band] - 1;
   for (int x = xStart; x < xStart + BAR_WIDTH; x++) {
    // matrix->drawPixel(x, peakHeight, CHSV(0,255,0));
-   dma_display->drawPixelRGB888(x,peakHeight,0,0,255); 
-   dma_display->drawPixelRGB888(x,peakHeight+1,0,0,255);
+   dma2_display->drawPixelRGB888(x,peakHeight,0,0,255); 
+   dma2_display->drawPixelRGB888(x,peakHeight+1,0,0,255);
      }
 
 }
@@ -452,9 +452,9 @@ void TriPeak(int band) {
   for (int x = xStart; x < xStart + BAR_WIDTH; x++) {
     
   
-  if (peakHeight < (PANEL_HEIGHT/4)) dma_display->drawPixelRGB888(x,peakHeight,TriBar_RGB_Top); //Top red
-    else if (peakHeight > (PANEL_HEIGHT/2)) dma_display->drawPixelRGB888(x,peakHeight,TriBar_RGB_Bottom); //green
-    else dma_display->drawPixelRGB888(x,peakHeight,TriBar_RGB_Middle); //yellow
+  if (peakHeight < (PANEL_HEIGHT/4)) dma2_display->drawPixelRGB888(x,peakHeight,TriBar_RGB_Top); //Top red
+    else if (peakHeight > (PANEL_HEIGHT/2)) dma2_display->drawPixelRGB888(x,peakHeight,TriBar_RGB_Bottom); //green
+    else dma2_display->drawPixelRGB888(x,peakHeight,TriBar_RGB_Middle); //yellow
   
   }
 }

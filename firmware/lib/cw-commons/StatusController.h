@@ -144,7 +144,7 @@ struct StatusController
 	{
 		Locator::getDisplay()->fillRect(0, 24, 64, 52, 0);
 		Locator::getDisplay()->drawBitmap(16, 24, CW_STATUS_WIFI, 32, 32, 0x2459);
-		printCenter("Connecting WiFi", 61);
+		printCenter("Connect to WiFi", 61);
 	}
 
 	void wifiConnectionFailed(const char *msg)

@@ -85,7 +85,7 @@ CRGB leds[NUM_LEDS];
  
 #ifdef HUB75
 // placeholder for the matrix object
-MatrixPanel_I2S_DMA *dma_display = nullptr;
+MatrixPanel_I2S_DMA *dma2_display = nullptr;
 #endif
 
 
@@ -133,13 +133,13 @@ void SetupHUB75(void){
   mxconfig.latch_blanking = 4;
   //mxconfig.i2sspeed = HUB75_I2S_CFG::HZ_20M;
   // OK, now we can create our matrix object
-  dma_display = new MatrixPanel_I2S_DMA(mxconfig);
-  // dma_display->setLatBlanking(2);
+  dma2_display = new MatrixPanel_I2S_DMA(mxconfig);
+  // dma2_display->setLatBlanking(2);
   // let's adjust default brightness to about xx%
-  dma_display->setBrightness8(32);    // range is 0-255, 0 - 0%, 255 - 100%
-  //dma_display->setBrightness8(map(analogRead(BRIGHTNESSPOT),0,4095,10,BRIGHTNESSMAX));
+  dma2_display->setBrightness8(32);    // range is 0-255, 0 - 0%, 255 - 100%
+  //dma2_display->setBrightness8(map(analogRead(BRIGHTNESSPOT),0,4095,10,BRIGHTNESSMAX));
   // Allocate memory and start DMA display
-  if( not dma_display->begin() )
+  if( not dma2_display->begin() )
       Serial.println("****** !KABOOM! I2S memory allocation failed ***********");
  #endif  
 }
