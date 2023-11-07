@@ -3,51 +3,15 @@
 #include <ESP32-HUB75-MatrixPanel-I2S-DMA.h>
 
 /********************************************************************************************************************************************************
-*                                                                                                                                                       *
-   Project:         FFT Spectrum Analyzer
-   Target Platform: ESP32
-*                                                                                                                                                       *
-   Version: 1.0
-   Hardware setup: See github
-   Spectrum analyses done with analog chips MSGEQ7
-*                                                                                                                                                       *
-   Mark Donners
-   The Electronic Engineer
-   Website:   www.theelectronicengineer.nl
-   facebook:  https://www.facebook.com/TheelectronicEngineer
-   youtube:   https://www.youtube.com/channel/UCm5wy-2RoXGjG2F9wpDFF3w
-   github:    https://github.com/donnersm
-*                                                                                                                                                       *
-*********************************************************************************************************************************************************
-  Version History
-   1.0 First release, code extraced from 14 band spectrum analyzer 3.00 and modified to by used with FFT on a ESP32. No need for frequency board or
-       MCGEQ7 chips.
-       - HUB75 interface or
-       - WS2812 leds ( matrix/ledstrips)
-       - 8/16/32 or 64 channel analyzer
-       - calibration for White noise, pink noise, brown noise sensitivity included and selectable
-       - Fire screensaver
-       - Display of logo and interface text when used with HUB75
-*                                                                                                                                                       *
-*********************************************************************************************************************************************************
-  Version FFT 1.0 release July 2021
-*********************************************************************************************************************************************************
-   Status   | Description
-   Open     | Some Hub75 displays use a combination of chipsets of are from a different productions batch which will not work with this libary
-   Open     | Sometime the long press for activating/de-activating the autoChange Pattern mode doesn't work
-   Solved   | When using 64 bands, band 0 is always at max value. This was caused by the array dize [64]-> solved by chnaging it to 65
-  Not a bug | Different types of HUB75 displays require different libary settings.It is what it is and it all depends on what the distributer sends you.
-            | For into on the libary settings, see the library documentation on Github: https://github.com/mrfaptastic/ESP32-HUB75-MatrixPanel-I2S-DMA
-  Wish      | Web interface. not possible without some heavy workaround cant use WIFI and ADC at same time
-* *******************************************************************************************************************************************************
-  People who inspired me to do this build and figure out how stuff works:
-  Dave Plummer         https://www.youtube.com/channel/UCNzszbnvQeFzObW0ghk0Ckw
-  Mrfaptastic          https://github.com/mrfaptastic
-  Scott Marley         https://www.youtube.com/user/scottmarley85
-  Brian Lough          https://www.youtube.com/user/witnessmenow
-  atomic14             https://www.youtube.com/channel/UC4Otk-uDioJN0tg6s1QO9lw
-
-  Make sure your arduino IDE settings: Compiler warnings is set to default to make sure the code will compile                                           */
+ * EPS32 Audio Visualizer 
+ * Github: https://github.com/robegamesios/FFT_ESP32_Analyzer
+ * Features:
+ *  Web interface by accessing the ESP32 wifi address
+ *  Update the firmware via OTA
+ * 
+ * Forked from https://github.com/donnersm/FFT_ESP32_Analyzer
+ 
+********************************************************************************************************************************************************/
 
 #define VERSION "V1.0"
 
@@ -290,13 +254,6 @@ void loopAudioVisualizer()
 {
   size_t bytesRead = 0;
 
-  // Handle Userinterface
-  {
-    // #ifdef HUB75
-    //         dma2_display->clearScreen();
-    // #endif
-  }
-
   // ############ Step 1: read samples from the I2S Buffer ##################
   i2s_read(I2S_PORT,
            (void *)samples,
@@ -442,6 +399,31 @@ void loopAudioVisualizer()
     }
     bndcounter[band] += barHeight; // ten behoeve calibratie
 
+    // if there hasn't been much of a input signal for a longer time ( see settings ) go to demo mode
+    if ((millis() - LastDoNothingTime) > DemoAfterSec && DemoFlag == false)
+    {
+      DemoFlag = true;
+      // first store current mode so we can go back to it after wake up
+      DemoModeMem = buttonPushCounter;
+      AutoModeMem = autoChangePatterns;
+      autoChangePatterns = false;
+      buttonPushCounter = 12;
+#ifdef HUB75
+      dma2_display->clearScreen();
+#endif
+    }
+    // Wait,signal is back? then wakeup!
+    else if (DemoFlag == true && (millis() - LastDoNothingTime) < DemoAfterSec)
+    { //("In loop 2:  %d", millis() - LastDoNothingTime);
+      // while in demo the democounter was reset due to signal on one of the bars.
+      // So we need to exit demo mode.
+#ifdef HUB75
+      dma2_display->clearScreen();
+#endif
+      buttonPushCounter = DemoModeMem; // restore settings
+      autoChangePatterns = AutoModeMem; // restore settings
+      DemoFlag = false;
+    }
 #if BottomRowAlwaysOn
     if (barHeight == 0)
       barHeight = 1; // make sure there is always one bar that lights up
@@ -641,7 +623,7 @@ void loopAudioVisualizer()
   EVERY_N_MILLISECONDS(10)
   colorTimer++; // Used in some of the patterns
 
-  EVERY_N_SECONDS(SecToChangePattern)
+  EVERY_N_SECONDS(secToChangePattern)
   {
     // if (FastLED.getBrightness() == 0) FastLED.setBrightness(BRIGHTNESSMARK);  //Re-enable if lights are "off"
     if (autoChangePatterns)
