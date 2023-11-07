@@ -9,21 +9,27 @@
 #include <AudioVisualizer.h>
 
 #define ESP32_LED_BUILTIN 2
-uint8_t selectedTheme = 7;
+#define AUDIO_VISUALIZER_THEME 100
+uint8_t selectedTheme = 0;
 
 void setup()
 {
   Serial.begin(115200);
   pinMode(ESP32_LED_BUILTIN, OUTPUT);
 
+  ClockwiseParams::getInstance()->load();
+
+  selectedTheme = ClockwiseParams::getInstance()->selectedTheme;
+
   // StatusController::getInstance()->blink_led(5, 100);
-  if (selectedTheme == 7)
+  if (selectedTheme == AUDIO_VISUALIZER_THEME)
   {
+    Serial.println("selected audio visualizer");
     setupAudiVisualizer();
-    // return;
   }
   else
   {
+    Serial.println("selected clockface");
     setupClockface();
   }
 
@@ -40,7 +46,7 @@ void setup()
     delay(1000);
   }
 
-  if (selectedTheme != 7)
+  if (selectedTheme != AUDIO_VISUALIZER_THEME)
   {
     createClockface();
   }
@@ -57,7 +63,7 @@ void loop()
     ClockwiseWebServer::getInstance()->handleHttpRequest();
   }
 
-  if (selectedTheme == 7)
+  if (selectedTheme == AUDIO_VISUALIZER_THEME)
   {
     loopAudioVisualizer();
   }

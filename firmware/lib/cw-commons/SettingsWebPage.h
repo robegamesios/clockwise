@@ -64,6 +64,12 @@ const char SETTINGS_PAGE[] PROGMEM = R""""(
 
 <body>
 <div class="card">
+    <h2 class="card-title">Music Visualizer</h2>
+    <p class="card-description">Shows audio spectrum that syncs with your music.</p>
+    <img class="card-image" src="https://github.com/robegamesios/clockwise/blob/609c24bcefe1ac681b54db0fb495e52a5ae43f28/firmware/lib/clockfaces/thumbnails/canvas_clock.jpg?raw=true" alt="Canvas Clock">
+    <a class="update-button" onclick="updatePreference('selectedTheme', 100)">Select</a>
+</div>
+<div class="card">
     <h2 class="card-title">Canvas Clock</h2>
     <p class="card-description">Customizable canvas for gif and images.</p>
     <img class="card-image" src="https://github.com/robegamesios/clockwise/blob/609c24bcefe1ac681b54db0fb495e52a5ae43f28/firmware/lib/clockfaces/thumbnails/canvas_clock.jpg?raw=true" alt="Canvas Clock">
