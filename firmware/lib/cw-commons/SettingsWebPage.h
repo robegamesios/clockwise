@@ -265,13 +265,7 @@ const char SETTINGS_PAGE[] PROGMEM = R""""(
       const xhr = new XMLHttpRequest();
       xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status >= 200 && this.status < 299) {
-          if (key == 'selectedTheme') {
-            setTimeout(() => {
-              location.reload();
-            }, 8000);
-          } else {
-            document.getElementById('status').style.display = 'block';
-          }
+          document.getElementById('status').style.display = 'block';
         }
       };
       xhr.open('POST', '/set?' + key + '=' + value);
