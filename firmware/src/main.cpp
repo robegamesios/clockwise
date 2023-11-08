@@ -22,6 +22,7 @@ void setup()
   selectedTheme = ClockwiseParams::getInstance()->selectedTheme;
 
   // StatusController::getInstance()->blink_led(5, 100);
+  
   if (selectedTheme == AUDIO_VISUALIZER_THEME)
   {
     Serial.println("selected audio visualizer");

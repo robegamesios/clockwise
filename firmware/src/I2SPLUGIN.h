@@ -19,7 +19,6 @@
 
 #pragma once
 #include <driver/i2s.h>
-#include <driver/adc.h>
 
 //Settings
 const int samplingFrequency = 44100;

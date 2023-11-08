@@ -297,17 +297,12 @@ void Clockface::renderElements(JsonArrayConst elements)
 bool Clockface::deserializeDefinition()
 {
 
-  // WiFiClient client;
   WiFiClientSecure client;
-  //ClockwiseHttpClient::getInstance()->httpGet(&client, "raw.githubusercontent.com", "/jnthas/clock-club/v1/pac-man.json", 443);
-  //ClockwiseHttpClient::getInstance()->httpGet(&client, "192.168.3.19", "/nyan-cat.json", 4443);
-
 
   if (ClockwiseParams::getInstance()->canvasServer.isEmpty() || ClockwiseParams::getInstance()->canvasFile.isEmpty()) {
     drawSplashScreen(0xC904, "Params werent set");
     return false;
   }
-
 
   String server = ClockwiseParams::getInstance()->canvasServer;
   String file = String("/" + ClockwiseParams::getInstance()->canvasFile + ".json");
@@ -317,10 +312,14 @@ bool Clockface::deserializeDefinition()
     port = 443;
     file = String("/robegamesios/clock-club/main/shared" + file);
   }
-
+  Serial.print("before free heap: ");
+  Serial.println(String(ESP.getFreeHeap()));
   ClockwiseHttpClient::getInstance()->httpGet(&client, server.c_str(), file.c_str(), port);
   
   DeserializationError error = deserializeJson(doc, client);
+  Serial.print("after free heap: ");
+  Serial.println(String(ESP.getFreeHeap()));
+
   if (error)
   {
     drawSplashScreen(0xC904, "Error! Check logs");

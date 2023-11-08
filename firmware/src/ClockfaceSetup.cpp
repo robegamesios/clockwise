@@ -61,6 +61,8 @@ void displaySetup(bool swapBlueGreen, uint8_t displayBright)
 
 void setupClockface()
 {
+  ClockwiseParams::getInstance()->load();
+  
   pinMode(ClockwiseParams::getInstance()->ldrPin, INPUT);
 
   displaySetup(ClockwiseParams::getInstance()->swapBlueGreen, ClockwiseParams::getInstance()->displayBright);
