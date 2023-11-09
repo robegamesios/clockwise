@@ -89,5 +89,4 @@ struct ClockwiseParams
         manualPosix = preferences.getString(PREF_MANUAL_POSIX, "");
         selectedTheme = preferences.getUInt(PREF_SELECTED_THEME, 0);
     }
-
 };

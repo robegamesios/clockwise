@@ -240,18 +240,7 @@ void loopAudioVisualizer()
 
     vReal[i] = offset - samples[i];
     vImag[i] = 0.0; // Imaginary part must be zeroed in case of looping to avoid wrong calculations and overflows
-#if PrintADCRAW
-    Serial.printf("%7d,", samples[i]);
-#endif
-
-#if VisualizeAudio
-    Serial.printf("%d\n", samples[i]);
-#endif
   }
-
-#if PrintADCRAW
-  Serial.printf("\n");
-#endif
 
   // ############ Step 3: Do FFT on the VReal array  ############
   //  compute FFT
@@ -289,13 +278,6 @@ void loopAudioVisualizer()
   }
 
   // bufmd[0]=FreqBins[12];
-#if PrintRAWBins
-  for (int y = 0; y < numBands; y++)
-  {
-    Serial.printf("%7.1f,", FreqBins[y]);
-  }
-  Serial.printf("\n");
-#endif
 
   // ############ Step 5: Determine the VU value  and mingle in the readout...( cheating the bands ) ############ Step
   float t = averageSum / (SAMPLEBLOCK / 2);
@@ -461,21 +443,11 @@ void loopAudioVisualizer()
   if (loopcounter == 256)
   {
     loopcounter = 0;
-#if CalibratieLog
-    Calibration();
-    for (int g = 0; g < numBands; g++)
-      bndcounter[g] = 0;
-#endif
   }
   loopcounter++;
 
   if (buttonPushCounter != 12)
     DrawVUMeter(0); // Draw it when not in screensaver mode
-
-#if PrintRAWBins
-  Serial.printf("\n");
-  // delay(10);
-#endif
 
   // Decay peak
   EVERY_N_MILLISECONDS(Fallingspeed)

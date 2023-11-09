@@ -18,12 +18,6 @@
  
 
 #pragma once
-// Debug features should default be off!
-#define PrintRAWBins        0                       // set to 1 if you want to print the RAW FFT BIN values of each pass to the serial port
-#define PrintADCRAW         0                       // Set to 1 if you want to print the RAW ADC Values's of each pass to the serial port--> that is a lot of samples!!
-#define VisualizeAudio      0                       // Sends the raw ADC values from buffer to serial plotter...that is a lot of data!!
-#define CalibratieLog       0                       // a tool tell help with  calibrating to noise input signal
-// int  DEBUG =                0 ;                     // When debug=1, extra information is printed to serial port. Turn of if not needed--> DEBUG=0
 #define DEBUG_BUFFER_SIZE   100                     // Debug buffer size
 
 //Options Change to your likings

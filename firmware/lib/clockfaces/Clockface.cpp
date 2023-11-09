@@ -312,14 +312,9 @@ bool Clockface::deserializeDefinition()
     port = 443;
     file = String("/robegamesios/clock-club/main/shared" + file);
   }
-  Serial.print("before free heap: ");
-  Serial.println(String(ESP.getFreeHeap()));
   ClockwiseHttpClient::getInstance()->httpGet(&client, server.c_str(), file.c_str(), port);
   
   DeserializationError error = deserializeJson(doc, client);
-  Serial.print("after free heap: ");
-  Serial.println(String(ESP.getFreeHeap()));
-
   if (error)
   {
     drawSplashScreen(0xC904, "Error! Check logs");
