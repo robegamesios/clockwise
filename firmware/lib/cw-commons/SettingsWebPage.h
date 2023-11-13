@@ -120,7 +120,7 @@ const char SETTINGS_PAGE[] PROGMEM = R""""(
 
   <div class="w3-bar w3-black w3-medium">
     <div id="fw-version" class="w3-bar-item w3-black w3-hover-red"></div>
-    <div class="w3-bar-item w3-button w3-hover-yellow w3-right" onclick="loadChangeFirmwarePage();"><i class='fa fa-power-off'></i> Change Theme</div>
+    <div class="w3-bar-item w3-button w3-hover-yellow w3-right" onclick="loadChangeFirmwarePage();"><i class='fa fa-power-off'></i> Update Firmware</div>
     <div id="ssid" class="w3-bar-item w3-hover-blue w3-right"></div>
     <div class="w3-bar-item w3-button w3-hover-yellow w3-right" onclick="restartDevice();"><i class='fa fa-power-off'></i> Restart</div>
     <div id="status" class="w3-bar-item w3-green" style="display:none"><i class='fa fa-floppy-o'></i> Saved! Restart your device</div>
