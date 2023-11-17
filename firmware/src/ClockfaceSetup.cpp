@@ -6,6 +6,7 @@
 MatrixPanel_I2S_DMA *dma_display = nullptr;
 IClockface *clockface;
 CWDateTime cwDateTime;
+uint8_t selectedTheme;
 
 bool autoBrightEnabled;
 long autoBrightMillis = 0;
@@ -62,17 +63,17 @@ void displaySetup(bool swapBlueGreen, uint8_t displayBright)
 void setupClockface()
 {
   ClockwiseParams::getInstance()->load();
-  
+
   pinMode(ClockwiseParams::getInstance()->ldrPin, INPUT);
 
   displaySetup(ClockwiseParams::getInstance()->swapBlueGreen, ClockwiseParams::getInstance()->displayBright);
 
-  uint8_t selectedTheme = ClockwiseParams::getInstance()->selectedTheme;
+  selectedTheme = ClockwiseParams::getInstance()->selectedTheme;
   Serial.printf("selectedtheme = %d\n", selectedTheme);
   switch (selectedTheme)
   {
   case 0:
-    clockface = new Clockface(dma_display);
+    // use canvas, no-op just exit
     break;
 
   case 1:
@@ -105,9 +106,12 @@ void setupClockface()
     clockface = new Clockface_castlevania(dma_display);
     break;
 
+  case 100:
+    // audio visualizer, no-op just exit
+    break;
+
   default:
     // same as 0
-    clockface = new Clockface(dma_display);
     break;
   }
 

@@ -202,7 +202,7 @@ void DisplayPrint(char *text)
   dma2_display->fillRect(8, 8, kMatrixWidth - 16, 11, dma2_display->color444(0, 0, 0));
 }
 
-void setupAudiVisualizer()
+void setupAudioVisualizer()
 {
   Serial.begin(115200);
   Serial.println("Setting up Audio Input I2S");

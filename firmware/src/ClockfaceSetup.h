@@ -5,7 +5,6 @@
 #include "IClockface.h"  
 #include "CWDateTime.h"
 #include <CWPreferences.h>
-#include <Clockface.h>
 #include <Clockface_mario.h>
 #include <Clockface_pacman.h>
 #include <Clockface_timeInWords.h>
@@ -16,6 +15,7 @@
 extern MatrixPanel_I2S_DMA *dma_display;
 extern IClockface *clockface;
 extern CWDateTime cwDateTime;
+extern uint8_t selectedTheme;
 
 void setupClockface();
 void automaticBrightControl();
