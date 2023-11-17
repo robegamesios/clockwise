@@ -62,7 +62,7 @@ void displaySetup(bool swapBlueGreen, uint8_t displayBright)
 void setupClockface()
 {
   ClockwiseParams::getInstance()->load();
-  
+
   pinMode(ClockwiseParams::getInstance()->ldrPin, INPUT);
 
   displaySetup(ClockwiseParams::getInstance()->swapBlueGreen, ClockwiseParams::getInstance()->displayBright);
@@ -103,6 +103,10 @@ void setupClockface()
   case 6:
     // castlevania
     clockface = new Clockface_castlevania(dma_display);
+    break;
+
+  case 100:
+    // audio visualizer, no-op just exit
     break;
 
   default:

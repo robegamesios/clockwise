@@ -5,12 +5,10 @@
 // Commons
 #include <CWWebServer.h>
 #include <StatusController.h>
-
-#include <AudioVisualizer.h>
+#include <HTTPUpdate.h>
 
 #define ESP32_LED_BUILTIN 2
 #define AUDIO_VISUALIZER_THEME 100
-uint8_t selectedTheme = 0;
 
 void setup()
 {
@@ -19,20 +17,7 @@ void setup()
 
   ClockwiseParams::getInstance()->load();
 
-  selectedTheme = ClockwiseParams::getInstance()->selectedTheme;
-
-  // StatusController::getInstance()->blink_led(5, 100);
-  
-  if (selectedTheme == AUDIO_VISUALIZER_THEME)
-  {
-    Serial.println("selected audio visualizer");
-    setupAudiVisualizer();
-  }
-  else
-  {
-    Serial.println("selected clockface");
-    setupClockface();
-  }
+  uint8_t selectedTheme = ClockwiseParams::getInstance()->selectedTheme;
 
   // StatusController::getInstance()->clockwiseLogo();
   delay(1000);
@@ -47,10 +32,37 @@ void setup()
     delay(1000);
   }
 
-  if (selectedTheme != AUDIO_VISUALIZER_THEME)
+  if (selectedTheme == AUDIO_VISUALIZER_THEME)
   {
-    createClockface();
+    Serial.printf("selectedtheme = %d\n", selectedTheme);
+    // update firmware to canvas
+        WiFiClientSecure client;
+    client.setInsecure();
+
+    // Reading data over SSL may be slow, use an adequate timeout
+    client.setTimeout(12000 / 1000); // timeout argument is defined in seconds for setTimeout
+
+    t_httpUpdate_return ret = httpUpdate.update(client, "https://raw.githubusercontent.com/robegamesios/clock-club/main/binFiles/audioVisualizerPlusFirmware.bin");
+    switch (ret)
+    {
+    case HTTP_UPDATE_FAILED:
+      Serial.printf("HTTP_UPDATE_FAILED Error (%d): %s\n", httpUpdate.getLastError(), httpUpdate.getLastErrorString().c_str());
+      break;
+
+    case HTTP_UPDATE_NO_UPDATES:
+      Serial.println("HTTP_UPDATE_NO_UPDATES");
+      break;
+
+    case HTTP_UPDATE_OK:
+      Serial.println("HTTP_UPDATE_OK");
+      break;
+    }
+    return;
   }
+
+  setupClockface();
+
+  createClockface();
 
   delay(1000);
   ClockwiseWebServer::getInstance()->startWebServer();
@@ -58,19 +70,11 @@ void setup()
 
 void loop()
 {
-
   if (wifi.isConnected())
   {
     ClockwiseWebServer::getInstance()->handleHttpRequest();
   }
 
-  if (selectedTheme == AUDIO_VISUALIZER_THEME)
-  {
-    loopAudioVisualizer();
-  }
-  else
-  {
-    clockface->update();
-    automaticBrightControl();
-  }
+  clockface->update();
+  automaticBrightControl();
 }
