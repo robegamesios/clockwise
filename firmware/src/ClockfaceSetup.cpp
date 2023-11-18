@@ -73,7 +73,8 @@ void setupClockface()
   switch (selectedTheme)
   {
   case 0:
-    // use canvas, no-op just exit
+  //just need a Clockface to init Locator, etc.
+    clockface = new Clockface_mario(dma_display);
     break;
 
   case 1:

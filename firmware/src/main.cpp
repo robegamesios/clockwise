@@ -12,6 +12,18 @@
 #define AUDIO_VISUALIZER_THEME 100
 #define CANVAS_THEME 0
 
+void update_progress(int cur, int total)
+{
+  // Clear screen
+  Locator::getDisplay()->fillRect(0, 35, 64, 64, 0x0000);
+
+  // Display progress
+  float progress = cur * 100.0 / total;
+  char buffer[30];
+  sprintf(buffer, "%.0f%%", progress);
+  StatusController::getInstance()->printCenter(buffer, 40);
+}
+
 void setup()
 {
   Serial.begin(115200);
@@ -32,12 +44,9 @@ void setup()
     delay(1000);
   }
 
-  if (selectedTheme == AUDIO_VISUALIZER_THEME)
+  if (selectedTheme == CANVAS_THEME)
   {
-    setupAudioVisualizer();
-  }
-  else if (selectedTheme == CANVAS_THEME)
-  {
+    Serial.printf("selectedtheme = %d\n", selectedTheme);
     // update firmware to canvas
     WiFiClientSecure client;
     client.setInsecure();
@@ -45,7 +54,24 @@ void setup()
     // Reading data over SSL may be slow, use an adequate timeout
     client.setTimeout(12000 / 1000); // timeout argument is defined in seconds for setTimeout
 
+    // Display IP address
+    char ipAddressLabel[16];
+    sprintf(ipAddressLabel, "IP Address:");
+    StatusController::getInstance()->printCenter(ipAddressLabel, 5);
+
+    IPAddress ipAddress = WiFi.localIP();
+    char ipAddressString[16];
+    sprintf(ipAddressString, "%s", ipAddress.toString().c_str());
+    StatusController::getInstance()->printCenter(ipAddressString, 15);
+
+    // Display Loading text
+    const char *loadingText = "Loading..";
+    StatusController::getInstance()->printCenter(loadingText, 30);
+
+    httpUpdate.onProgress(update_progress);
+
     t_httpUpdate_return ret = httpUpdate.update(client, "https://raw.githubusercontent.com/robegamesios/clock-club/main/binFiles/canvasPlusFirmware.bin");
+
     switch (ret)
     {
     case HTTP_UPDATE_FAILED:
@@ -60,9 +86,14 @@ void setup()
       Serial.println("HTTP_UPDATE_OK");
       break;
     }
+    return;
   }
 
-  if (selectedTheme != AUDIO_VISUALIZER_THEME)
+  if (selectedTheme == AUDIO_VISUALIZER_THEME)
+  {
+    setupAudioVisualizer();
+  }
+  else
   {
     createClockface();
   }
