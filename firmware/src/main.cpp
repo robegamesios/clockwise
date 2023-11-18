@@ -46,7 +46,7 @@ void setup()
 
   if (selectedTheme == CANVAS_THEME)
   {
-    Serial.printf("selectedtheme = %d\n", selectedTheme);
+    Serial.print("will update firmware to canvasPlusFirmware");
     // update firmware to canvas
     WiFiClientSecure client;
     client.setInsecure();
